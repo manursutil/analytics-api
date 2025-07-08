@@ -11,11 +11,11 @@ def read_events() -> EventListSchema:
     } # type: ignore
     
 @router.post("/")
-def create_event(payload: EventCreateSchema) -> EventListSchema:
-    print(payload.page)
+def create_event(payload: EventCreateSchema) -> EventSchema:
+    data = payload.model_dump()
     return {
-        "results": [{"id": 123}], 
-        "count": 1
+        "id": 123, 
+        **data
     } # type: ignore
     
 
@@ -26,5 +26,5 @@ def get_event(event_id: int) -> EventSchema:
 
 @router.put("/{event_id}")
 def update_event(event_id: int, payload: EventUpdateSchema) -> EventSchema:
-    print(payload.description)
-    return {"id": event_id} # type: ignore
+    data = payload.model_dump()
+    return {"id": event_id, **data} # type: ignore
